@@ -5,13 +5,13 @@ module.exports = function getConfig() {
 
         return {
                 twitter: {
-                        token: env['twitter.token'],
-                        token_secret: env['twitter.token_secret'],
-                        consumer_key: env['twitter.consumer_key'],
-                        consumer_secret: env['twitter.consumer_secret'],
+                        token: env.TwitterToken,
+                        token_secret: env.TwitterTokenSecret,
+                        consumer_key: env.TwitterConsumerKey,
+                        consumer_secret: env.TwitterConsumerSecret,
                 },
                 storage: {
-                        url: env['storage.url'],
+                        url: env.StorageURL,
                 }
         };
 };
