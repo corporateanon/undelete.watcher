@@ -84,7 +84,7 @@ function downloadSuccess(url, response) {
   console.log('attachment-downloaded: %d bytes (%d bytes in base64) %s', data.length, base64Data.length, url);
   return {
     url: url,
-    body: data,
+    body: base64Data,
   };
 }
 
