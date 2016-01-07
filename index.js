@@ -44,7 +44,7 @@ function addTweetSuccess(response) {
 }
 
 function addTweetError(error) {
-  console.log('add-tweet-error:', error);
+  console.error('add-tweet-error:', error);
 }
 
 function resolveAttachments(tweet) {
@@ -89,6 +89,6 @@ function downloadSuccess(url, response) {
 }
 
 function downloadError(url, error) {
-  console.log('attachment-download-error:', url, error);
+  console.error('attachment-download-error:', url, error);
   return null;
 }
