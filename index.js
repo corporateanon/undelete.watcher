@@ -20,18 +20,41 @@ function main() {
 }
 
 function onData(message) {
-  if (message && message.text && message.id_str && !message.retweeted_status) {
+  if (!message) {
+    return;
+  }
+
+  if (message.text && message.id_str && !message.retweeted_status) {
     onTweet({
       id: message.id_str,
       body: message,
     });
   }
+
+  if (message.delete && message.delete.status) {
+    let status = message.delete.status;
+    onDelete({
+      id: status.id_str,
+      user_id: status.user_id_str,
+    });
+  }
+
+}
+
+function onDelete(status) {
+  console.log('deletion: ', status.id);
+  storageAddDeletion(status);
 }
 
 function onTweet(tweet) {
   var body = tweet.body;
   console.log('tweet: ', '@' + body.user.screen_name, body.user.name, body.text);
   resolveAttachments(tweet).then(storageAddTweet);
+}
+
+function storageAddDeletion(status) {
+  axios.put(conf.storage.url + '/deletions', status)
+    .then(addDeletionSuccess, addDeletionError);
 }
 
 function storageAddTweet(tweet) {
@@ -45,6 +68,14 @@ function addTweetSuccess(response) {
 
 function addTweetError(error) {
   console.error('add-tweet-error:', error);
+}
+
+function addDeletionSuccess(response) {
+  console.log('add-deletion-success:', response.status, response.data);
+}
+
+function addDeletionError(error) {
+  console.error('add-deletion-error:', error);
 }
 
 function resolveAttachments(tweet) {
